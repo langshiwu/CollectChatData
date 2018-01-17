@@ -15,19 +15,19 @@ mainObject = User()
 #sql
 sel_user_by_nick= 'select * from luzhibot_user where nickName64 = %s'
 sel_friend_by_info='select * from luzhibot_friend where nickName64 = %s and remarkName = %s and sex = %s and centralId = %s'
-sel_chatroom_by_info='select * from luzhibot_chatroom where chatRoomNickName64 = %s and personNum = %s and centralId = %s'
+sel_chatroom_by_info='select * from luzhibot_chatroom where chatRoomNickName = %s and personNum = %s and centralId = %s'
 
-ins_user='insert into luzhibot_user(userName,passWord,weixinId,nickName64,remarkName,headImage,signature,sex) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)'
-ins_friends='insert into luzhibot_friend(userName,weixinId,nickName64,remarkName,headImage,sex,centralId) VALUES (%s,%s,%s,%s,%s,%s,%s)'
-ins_chatroom='insert into luzhibot_chatroom(chatRoomUserName,personNum,chatRoomNickName64,centralId,ownerUserName) VALUES (%s,%s,%s,%s,%s)'
-ins_dailog='insert into luzhibot_dailog(msgPath,msgType,msg,senderNick64,receiverNick64,time)VALUES (%s,%s,%s,%s,%s,%s)'
+ins_user='insert into luzhibot_user(userName,passWord,weixinId,nickName,remarkName,headImage,signature,sex) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)'
+ins_friends='insert into luzhibot_friend(userName,weixinId,nickName,remarkName,headImage,sex,centralId) VALUES (%s,%s,%s,%s,%s,%s,%s)'
+ins_chatroom='insert into luzhibot_chatroom(chatRoomUserName,personNum,chatRoomNickName,centralId,ownerUserName) VALUES (%s,%s,%s,%s,%s)'
+ins_dailog='insert into luzhibot_dailog(msgPath,msgType,msg,senderNick,receiverNick,time)VALUES (%s,%s,%s,%s,%s,%s)'
 conn = MySQLdb.connect(
         host = '127.0.0.1',
         port = 3306,
         user = 'root',
         passwd = '123456',
-        db = 'wechatimple',
-        charset = 'utf8',
+        db = 'wechat',
+        charset = 'utf8mb4',
 )
 if conn :
     cur = conn.cursor()
@@ -104,7 +104,7 @@ def process_msg(msg):
         sender=it.search_friends(userName=msg.FromUserName)
         receiver=it.search_friends(userName=msg.ToUserName)
         dt = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        cur.execute(ins_dailog,('','Text',msg.text,b.b64encode(sender.NickName),b.b64encode(receiver.NickName),dt,''))
+        cur.execute(ins_dailog,('','Text',msg.text,b.b64encode(sender.NickName),b.b64encode(receiver.NickName),dt))
         conn.commit()
 
 
