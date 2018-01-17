@@ -5,5 +5,11 @@ The data collectted can make up corpus for a chatBot  
 
 ## 1.scan QRcode  
 
-![](image/scan.jpeg)
+![](image/scan.jpg)
 
+## 2.login
+
+![](image/login.jpg)
+
+## 3.login again
+![](image/relogin.jpg)
